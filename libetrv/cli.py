@@ -1,7 +1,8 @@
+import json
 import time
 import fire
 from libetrv.device import eTRVDevice
-
+from types import SimpleNamespace
 
 def time_to_str(datetime):
     if datetime is not None:
@@ -59,6 +60,14 @@ class Device:
         print('Vacation From:                {}'.format(time_to_str(result.vacation_from)))
         print('Vacation To:                  {}'.format(time_to_str(result.vacation_to)))
 
+    def state(self):
+        temp = self._device.temperature
+        print('name:', self._device.name)
+        print('target:', temp.set_point_temperature)
+        print('room:', temp.room_temperature)
+        print('battery:', self._device.battery)
+
+
     def temperature(self):
         temp = self._device.temperature
         print("Current room temperature: {:.1f}°C".format(temp.room_temperature))
@@ -74,6 +83,11 @@ class Device:
         
     def set_setpoint(self, setpoint):
         self._device.temperature.set_point_temperature = setpoint
+        temp = self._device.temperature
+        print('name:', self._device.name)
+        print('target:', temp.set_point_temperature)
+        print('room:', temp.room_temperature)
+        print('battery:', self._device.battery)
 
 
 if __name__ == "__main__":
